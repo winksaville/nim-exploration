@@ -1,3 +1,24 @@
+# reading a file a line at a time with try/except/finally
+try:
+  var f = open("t.nim")
+  block:
+    try:
+      var line: string
+      line = f.readline()
+      echo "line=", line
+      echo "echo done"
+    except IOError:
+      echo "IOError reading"
+    finally:
+      echo "closing"
+      close f
+      echo "closed"
+except IOError:
+  echo "IOError"
+finally:
+  echo "done"
+
+# Iterator
 iterator things(a: string): string =
   if a == nil:
     yield "<nil>"
@@ -35,6 +56,7 @@ for s in things(len3Str):
   stdout.write s # no EOL
 stdout.write "\n"
 
+# simple for loop
 proc hi(count: int) =
   for i in 1..count:
     echo ("hi " & $i)
@@ -44,6 +66,7 @@ proc two(): int =
 
 hi(two())
 
+# local scope rules
 if (let m = 2 + 2; m == 3):
   echo "m == 3"
 elif (let m = 3 + 4; m == 6):
@@ -51,6 +74,7 @@ elif (let m = 3 + 4; m == 6):
 else:
   echo "help"
 
+# conditional compiliation
 when 1 == 1:
   echo "ok"
 elif 2 != 2:
