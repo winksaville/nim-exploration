@@ -1,3 +1,45 @@
+# try expression
+let x: int =
+  try:
+    discard open("t.nimx")
+    echo("exists")
+    0 # ok path
+  except:
+    let em = getCurrentExceptionMsg()
+    echo("em=",em)
+    -1 # error path
+  finally: echo "yo"
+
+echo "x=",$x
+
+# Stack object and construction
+type StackObject = object
+  f1: int
+
+var so = StackObject(f1: 4)
+echo("so=",so)
+
+# Heap object and construction
+type HeapObject = ref object # not "ref" for heap objects
+  f1: int
+
+# Constructor with optional default value
+proc newHeapObject(f1p: int = 3): HeapObject =
+  result = HeapObject(f1: f1p)
+
+# direct construction
+var ho = HeapObject(f1: 5)
+echo("ho=",ho[])
+
+# Use constructor with a default f1 parameter
+var hox = newHeapObject()
+echo("hox=",hox[])
+
+# Use constructor but override the default
+var hoy = newHeapObject(7)
+echo("hoy=",hoy[])
+
+
 # reading a file a line at a time with try/except/finally
 try:
   var f = open("t.nim")
@@ -9,6 +51,8 @@ try:
       echo "echo done"
     except IOError:
       echo "IOError reading"
+    except:
+      echo "Uknknown exception"
     finally:
       echo "closing"
       close f
