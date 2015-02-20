@@ -1,3 +1,24 @@
+import rdstdin
+
+# Funtions a first class variable
+# Two procs with the same signatures
+proc myHi() = echo "hi"
+proc otherHi() = echo "other hi"
+
+# declare a variabe that take s void proc initialize
+# it to myHi execute it then change it to otherHi and execute
+var h: proc = myHi
+h()
+h = otherHi
+h()
+
+# Now function variables with parameters
+type Readl = proc(prompt: string): string {.closure.}
+var myReadLine: Readl = readLineFromStdin
+
+var name = myReadLine("hi, your name: ")
+echo "So your name is " & name
+
 # try expression
 let x: int =
   try:
