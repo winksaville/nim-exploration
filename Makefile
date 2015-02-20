@@ -3,7 +3,7 @@ NIM_TARGET=t
 $(NIM_TARGET): $(NIM_TARGET).nim
 	nim c -r $<
 
-release: t.nim
+release: $(NIM_TARGET).nim
 	nim c -r --d:release $<
 
 clean:
