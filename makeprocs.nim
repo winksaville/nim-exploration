@@ -1,6 +1,6 @@
 import macros, strutils
 
-macro makeProcs(n: varargs[expr]): stmt =
+macro makeProcs(name: string, number: int): stmt {.immediate.} =
   ## parameter n[0] is the base name and n[1] is the
   ## number of procs to create of the form baseName & $i.
   ## So makeProcs("def", "3") creates:
@@ -11,9 +11,9 @@ macro makeProcs(n: varargs[expr]): stmt =
   ##   proc def3() =
   ##     echo("my name=def3")
   var
-    baseName: string = $n[0]
-    num: int = parseInt($n[1])
-  echo "makeP: n.len=", n.len, " baseName=", baseName, " num=", num
+    baseName: string = $name
+    num: int = parseInt($number.toStrLit())
+  echo "makeP: baseName=", baseName, " num=", num
   result = newStmtList()
   for i in 1..num:
     var
@@ -23,9 +23,9 @@ macro makeProcs(n: varargs[expr]): stmt =
     procBody.add(newCall("echo", newStrLitNode("my name=" & $name)))
     result.add(newProc(name, procParams, procBody))
 
-makeProcs("def", "3")
+makeProcs(def, 3)
 
 def1()
-def1()
+def2()
 def3()
 
